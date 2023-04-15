@@ -8,6 +8,10 @@
 # 2. Add two fields - check that there isn't already a PAEDS / ADULTS indicator!
 #   1. adult_or_paeds - 0 = adult, 1 = paeds to indicate the speciality of the centre in question.
 #   2. uk_centre_or_unit - 0 = centre, 1 = unit to indicate the UK hospitals are the more major 'centres' or more minor 'units'.
+#
+# 3. Add map coordinates of all hospitals
+#   For each unique participating hospital, get their latitude and longitude for automatic mapping
+
 
 library(tidyverse)
 library(readxl)
@@ -255,15 +259,15 @@ aus.nz.role.min.temp.delay <- data %>%
          new.min.temp = if_else(min.temp.delay.surg == 11,1,min.temp.delay.surg + 1)
          ) %>%
   na.omit() %>%
-  mutate(min.temp.delay.surg = as.ordered(case_when(min.temp.delay.surg == 1 ~ "a no.min",
-                                                    min.temp.delay.surg == 2 ~ "b <32C",
-                                                    min.temp.delay.surg == 3 ~ "c 32C",
-                                                    min.temp.delay.surg == 4 ~ "d 33C",
-                                                    min.temp.delay.surg == 5 ~ "e 34C",
-                                                    min.temp.delay.surg == 6 ~ "f 35C",
-                                                    min.temp.delay.surg == 7 ~ "g 36C",
-                                                    min.temp.delay.surg == 8 ~ "h 37C",
-                                                    min.temp.delay.surg == 9 ~ "i 38C",
+    mutate(min.temp.delay.surg = as.ordered(case_when(min.temp.delay.surg == 1 ~ "a no.min",
+                                                      min.temp.delay.surg == 2 ~ "b <32C",
+                                                      min.temp.delay.surg == 3 ~ "c 32C",
+                                                      min.temp.delay.surg == 4 ~ "d 33C",
+                                                      min.temp.delay.surg == 5 ~ "e 34C",
+                                                      min.temp.delay.surg == 6 ~ "f 35C",
+                                                      min.temp.delay.surg == 7 ~ "g 36C",
+                                                      min.temp.delay.surg == 8 ~ "h 37C",
+                                                      min.temp.delay.surg == 9 ~ "i 38C",
                                                     min.temp.delay.surg == 10 ~ "j 39C",
                                                     min.temp.delay.surg == 11 ~ "k >39C"
                                          )))
@@ -575,15 +579,22 @@ sum(xtabs(~ groups.treated + set.max.temp.surg,aus.nz.paediatric.set.max.temp))
 coin::wilcox_test(set.max.temp.surg ~ groups.treated,data = aus.nz.paediatric.set.max.temp)
 
 # Table 1 - description of participants 
-participants <- data %>% dplyr::select(country, dr.role)
+participants <- data %>%
+                dplyr::select(
+                    country, 
+                    dr.role, 
+                    max.burn.size.treated, 
+                    clinical.trial.cool.patient,
+                    min.temp.delay.surg,
+                    max.temp.delay.surg
+                )
 
-table1 <- tbl_summary(
-  data,
+(table1 <- tbl_summary(
+  participants,
   by = country, missing = 'no'
 ) %>%
 add_n() %>%
-#add_p() %>%
+add_p() %>%
 modify_header(label = "**Variable**") %>% # update the column header
 bold_labels()   
-
-
+)
