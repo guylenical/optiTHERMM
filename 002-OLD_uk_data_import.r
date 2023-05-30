@@ -1,24 +1,20 @@
-#Clear existing data and graphics
-#rm(list=ls())
+# this is the R script provided by REDCAp that encodes the data
+
+library(tidyverse)
+#Clear existing data and graphics rm(list=ls())
 graphics.off()
 #Load Hmisc library
 library(Hmisc)
 #Read Data
-data_uk=read.csv('data/optithermm_uk_data_2023-05-30.csv')
+data_uk=read.csv('data/optithermm_uk_data_2023-04-14.csv')
 #Setting Labels
 
 label(data_uk$record_id)="Record ID"
 label(data_uk$redcap_event_name)="Event Name"
-label(data_uk$redcap_survey_identifier)="Survey Identifier"
 label(data_uk$optithermm_survey_timestamp)="Survey Timestamp"
-label(data_uk$referral_id)="Whats the referral ID?"
-label(data_uk$hospital_name_bb7995)="Please enter the name of your hospital"
-label(data_uk$town_or_city_dac7f1)="In which city or town is your hospital located?"
 label(data_uk$hospital_country_05a896)="In which country is your hospital located?"
-label(data_uk$country_other)="Which OTHER country?"
 label(data_uk$hospital_admit_treat_burns_8bbf40)="Which groups do you treat in your hospital?"
 label(data_uk$hospital_role_e1e5f6)="Please select your role within the burns team:"
-label(data_uk$hospital_role_other_392cc2)="Which other role?"
 label(data_uk$hospital_statements_79b57b)="Which of the following statements about your hospital is true:"
 label(data_uk$max_burn_size_67286f)="Please enter the maximum burn size that can be treated by your hospital as a percentage of total body surface area (TBSA). For example, if your maximum burned area is 15% TBSA, enter the number 15 in the space below."
 label(data_uk$number_burns_to20_percent)="1-20%"
@@ -50,7 +46,6 @@ label(data_uk$tempcontrol_warming_9f2c7e___9)="Which methods do you use in your 
 label(data_uk$tempcontrol_warming_9f2c7e___10)="Which methods do you use in your hospital to warm burn patients in the operating room? (choice=Haemofiltration via vascular route with circuit set to warming)"
 label(data_uk$tempcontrol_warming_9f2c7e___11)="Which methods do you use in your hospital to warm burn patients in the operating room? (choice=Other)"
 label(data_uk$tempcontrol_warming_9f2c7e___12)="Which methods do you use in your hospital to warm burn patients in the operating room? (choice=None of the above)"
-label(data_uk$tempcontrol_warming_other_8d3367)="Which other warming method(s)?"
 label(data_uk$tempcontrol_cool_a24e84___1)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=Decreasing room temperature e.g. thermostat down to minimum)"
 label(data_uk$tempcontrol_cool_a24e84___2)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=Removing dressings)"
 label(data_uk$tempcontrol_cool_a24e84___3)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=Convective forced air cooling device e.g. cooling fan)"
@@ -62,7 +57,6 @@ label(data_uk$tempcontrol_cool_a24e84___8)="Which methodsdo you use inyour hospi
 label(data_uk$tempcontrol_cool_a24e84___9)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=Haemofiltration via vascular route with circuit set to cooling)"
 label(data_uk$tempcontrol_cool_a24e84___10)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=Other)"
 label(data_uk$tempcontrol_cool_a24e84___11)="Which methodsdo you use inyour hospital tocoolburn patients in the operating room? (choice=None of the above)"
-label(data_uk$tempcontrol_cooling_other_01b525)="Which other cooling method(s)?"
 label(data_uk$tempcontrol_measure_9fc87b___1)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=In-ear tympanic membrane thermometer)"
 label(data_uk$tempcontrol_measure_9fc87b___2)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=Non-contact or infrared thermometer)"
 label(data_uk$tempcontrol_measure_9fc87b___3)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=Rectal thermometer or probe)"
@@ -74,15 +68,13 @@ label(data_uk$tempcontrol_measure_9fc87b___8)="How do you measure patient body t
 label(data_uk$tempcontrol_measure_9fc87b___9)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=Skin temperature probe)"
 label(data_uk$tempcontrol_measure_9fc87b___10)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=Other)"
 label(data_uk$tempcontrol_measure_9fc87b___11)="How do you measure patient body temperature in your burn patients undergoing surgery? (choice=None of the above)"
-label(data_uk$tempcontrol_measure_other_41173f)="Which other measurement method(s)?"
 label(data_uk$tempcontrol_importance_961a0f)="Considering the measurement and management of patient body temperature, which of the following variables do you consider to be most clinically important?"
 label(data_uk$bodytempbefore_minimum_3f80ad)="Consider a patient at your hospital who is due to undergo burn surgery. Is there aminimum body temperaturebelow which you would delay burn surgery?"
 label(data_uk$bodytempbefore_maximum_3d8d7a)="Consider a patient at your hospital who is due to undergo burn surgery. Is there a maximum body temperature above which you would delay burn surgery?"
 label(data_uk$tempduring_minimum_7aaba4)="At your hospital do you have a preferredminimumpatient body temperature during burns surgery?"
 label(data_uk$tempduring_maximum_effc85)="Do you have a setmaximumpatient body temperature during burn surgery?"
 label(data_uk$rct)="There is emerging evidence that perioperative cooling of a patient with burns may have a beneficial effect. Would you be willing to be involved in a future clinical trial testing an intervention to cool a patient?"
-label(data_uk$respondentemail_f9534c)="If you would like to be sent the results of our study, please enter your email. This is entirely optional. Your email would not be used for any purpose other than to send you the results of the study.  If you would prefer not to provide your email, please skip this question.  Your email address will be kept according to General data_uk Protection Regulation (GDPR) and privacy regulations. Your data_uk will only be used to communicate with you about this study. At the end of the study your details will be erased. You can remove yourself from the email list at any point by emailing info@optithermm.org"
-label(data_uk$comments_feedback_7ea7f7)="If you have any comments, feedback or further information, please enter it in the box to the right. Thank you for contributing."
+label(data_uk$respondentemail_f9534c)="If you would like to be sent the results of our study, please enter your email. This is entirely optional. Your email would not be used for any purpose other than to send you the results of the study.  If you would prefer not to provide your email, please skip this question.  Your email address will be kept according to General Data Protection Regulation (GDPR) and privacy regulations. Your data will only be used to communicate with you about this study. At the end of the study your details will be erased. You can remove yourself from the email list at any point by emailing info@optithermm.org"
 label(data_uk$optithermm_survey_complete)="Complete?"
 #Setting Units
 
