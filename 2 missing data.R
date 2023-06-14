@@ -1,4 +1,4 @@
-# missing data analysis
+# missing data analysis from https://finalfit.org/articles/missing.html
 
 library(finalfit)
 
@@ -14,32 +14,26 @@ dependent4 <- c("set.max.temp.surg") # maximum body temperature during burn surg
 # complexity of burn treated 1
 # 'high level care' vs 'lower level care' based on complexity of burns treated. High level = inhalational burn treated + 40% TBSA or more treated there
 #  alternatively, 'high level care' could be where a unit ACCEPTS A BURN OF ANY SIZE
-explanatory1 <- c(
+explanatory <- c(
   "level.of.complexity",
-  "hospital.statement" 
-)
-
-# adult vs paeds divide
-explanatory2 <- c(
+  "hospital.statement", 
   "groups.treated"
 )
 
 # Visualisation
-data %>% missing_pairs(dependent1, explanatory1)   
-data %>% missing_pairs(dependent1, explanatory2)   
+data %>% ff_glimpse(dependent1, explanatory)   
+data %>% missing_pattern(dependent1, explanatory)
+data %>% missing_pairs(dependent1, explanatory)   
 
-data %>% missing_pairs(dependent2, explanatory1)   
-data %>% missing_pairs(dependent2, explanatory2)   
+data %>% ff_glimpse(dependent2, explanatory)   
+data %>% missing_pattern(dependent2, explanatory)
+data %>% missing_pairs(dependent2, explanatory)   
 
-data %>% missing_pairs(dependent3, explanatory1)   
-data %>% missing_pairs(dependent3, explanatory2)   
+data %>% ff_glimpse(dependent3, explanatory)   
+data %>% missing_pattern(dependent3, explanatory)
+data %>% missing_pairs(dependent3, explanatory)   
 
-data %>% missing_pairs(dependent4, explanatory1)   
-data %>% missing_pairs(dependent4, explanatory2)   
-
-# Hypothesis tests
-data %>% missing_compare(dependent1, c(explanatory1, explanatory2))
-data %>% missing_compare(dependent2, c(explanatory1, explanatory2))
-data %>% missing_compare(dependent3, c(explanatory1, explanatory2))
-data %>% missing_compare(dependent4, c(explanatory1, explanatory2))
+data %>% ff_glimpse(dependent4, explanatory)   
+data %>% missing_pattern(dependent4, explanatory)
+data %>% missing_pairs(dependent4, explanatory)   
 

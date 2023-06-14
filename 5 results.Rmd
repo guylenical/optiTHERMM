@@ -1,0 +1,42 @@
+---
+title: "optiTHERMM results"
+author: "Glenn Boardman, Guy Stanley"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("2 missing data.R")
+source("4 analysis.R")
+source("3 descriptive.R")
+library(ggplot2)
+library(tidyverse)
+```
+
+# Missing data
+Summary: data was recorded completely. Missing data likely has no effect on our hypotheses.
+
+# Descriptive statistics
+```{r} 
+
+ggplot(data, aes(x = max.burn.size.treated)) + geom_bar()
+```
+\pagebreak
+
+# Figures
+
+## Figure 1 - Flow chart schematic of responses to survey by doctor role and geographical region (For manual graphic design)
+\pagebreak
+## Figure 2 - Graphical schematic of study design (For manual graphic design)
+\pagebreak
+## Figue 3 - Respondents, based on geographical location (curent examples drawn by hand but could be mapped in R as coordinates are provided for each city)
+\pagebreak
+# Tables
+
+## Table 1 - Tabulation of survey participants, their characteristics and responses by geographical region
+
+```{r}
+table1
+```
+\pagebreak
